@@ -15,7 +15,7 @@ SRC_URI = "git://github.com/intel/ipp-crypto;protocol=https;branch=${IPP_BRANCH}
            file://0002-cmake-exclude-Yocto-build-flags.patch;striplevel=4 \
            file://0001-crypto-mb-Make-sure-libs-are-installed-correctly.patch;striplevel=4 \
            "
-SRCREV = "7d6ac349507258f49d00909df33d5dea4ff77f39"
+SRCREV = "5a77835c95768d1099c38568291e714c9d9f86ce"
 
 S = "${WORKDIR}/git/sources/ippcp/crypto_mb"
 
