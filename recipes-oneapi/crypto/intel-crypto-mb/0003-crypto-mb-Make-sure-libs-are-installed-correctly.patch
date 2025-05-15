@@ -1,0 +1,47 @@
+From 7d29e1067cecc8609b795fff2674fe1ab6cbd086 Mon Sep 17 00:00:00 2001
+From: Sudhir Sharma <sudhir.sharma@intel.com>
+Date: Thu, 15 May 2025 16:31:04 +0800
+Subject: [PATCH 3/3] crypto-mb: Make sure libs are installed correctly
+
+Dont assume that "lib" is always the correct destination. This fixes
+multilib builds when libdir != /usr/lib.
+
+Upstream-Status: Pending
+
+Signed-off-by: Anuj Mittal <anuj.mittal@intel.com>
+Signed-off-by: Sudhir Sharma <sudhir.sharma@intel.com>
+---
+ sources/ippcp/crypto_mb/src/CMakeLists.txt | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/sources/ippcp/crypto_mb/src/CMakeLists.txt b/sources/ippcp/crypto_mb/src/CMakeLists.txt
+index 7d3ae623..0db1bb2c 100644
+--- a/sources/ippcp/crypto_mb/src/CMakeLists.txt
++++ b/sources/ippcp/crypto_mb/src/CMakeLists.txt
+@@ -200,10 +200,10 @@ set(MB_LIB_TARGET ${MB_DYN_LIB_TARGET})
+ 
+ # Install destination
+ if (MB_STANDALONE)
+-    set(MBX_LIB_INSTALL_DIR "lib")
++    set(MBX_LIB_INSTALL_DIR ${CMAKE_INSTALL_LIBDIR})
+     set(MBX_PRIVATE_HEADERS_DIR "tools/staticlib/crypto_mb")
+ else()
+-    set(MBX_LIB_INSTALL_DIR "lib/intel64")
++    set(MBX_LIB_INSTALL_DIR "${CMAKE_INSTALL_LIBDIR}")
+     set(MBX_PRIVATE_HEADERS_DIR "tools/intel64/staticlib/crypto_mb")
+ endif()
+ 
+@@ -268,8 +268,8 @@ if(DYNAMIC_LIB OR MB_STANDALONE)
+ 
+         # Installation of the shared library
+         install(TARGETS ${MB_DYN_LIB_TARGET}
+-                LIBRARY DESTINATION "lib/intel64"
+-                RUNTIME DESTINATION "lib/intel64"
++                LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}"
++                RUNTIME DESTINATION "${CMAKE_INSTALL_LIBDIR}"
+                 PUBLIC_HEADER DESTINATION "include/crypto_mb"
+                 PRIVATE_HEADER DESTINATION "tools/intel64/staticlib/crypto_mb")
+     else()
+-- 
+2.37.3
+
